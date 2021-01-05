@@ -31,7 +31,7 @@ const sickleCellAnemia = (gene) => {
   return gene.join("");
 };
 
-const intronScanner = {
+const CRISPR = {
   start: /GGU(?:G|U)(?:G|A)GU/g,
   end: /CCC(?:U|A)(?:U|C)AG/g,
 };
@@ -131,8 +131,8 @@ const rnaPolymerase = (nucleotide) => {
 };
 
 const splicing = (rnaConverted) => {
-  let start = rnaConverted.match(intronScanner.start);
-  let end = rnaConverted.match(intronScanner.end);
+  let start = rnaConverted.match(CRISPR.start);
+  let end = rnaConverted.match(CRISPR.end);
 
   if (!start || !end || start.length !== end.length) {
     console.error("Splicing Error");
@@ -217,6 +217,8 @@ const renderDisplay = document.querySelector(".expression__display");
 const descDisplay = document.querySelector(".expression__description");
 
 normalDisplay.addEventListener("click", () => {
+  renderDisplay.innerHTML = "";
+  descDisplay.innerText = "";
   const haemoglobinSubunitBeta = geneExpression(HBB_GENE);
   let splitProtein = haemoglobinSubunitBeta.split("-*-");
   let htmlProtein = [];
@@ -235,13 +237,35 @@ normalDisplay.addEventListener("click", () => {
     htmlProtein.push(newSeparator);
   });
   htmlProtein.pop();
-  descDisplay.innerText = "normal";
+  descDisplay.innerText = "wild-type";
   htmlProtein.forEach((peptide) => {
     renderDisplay.appendChild(peptide);
   });
 });
 
 mutateDisplay.addEventListener("click", () => {
+  renderDisplay.innerHTML = "";
+  descDisplay.innerText = "";
   const haemoglobinSubunitBeta = geneExpressionMutated(HBB_GENE);
-  console.log(haemoglobinSubunitBeta);
+  let splitProtein = haemoglobinSubunitBeta.split("-*-");
+  let htmlProtein = [];
+  let count = 0;
+  splitProtein.forEach((peptide) => {
+    count++;
+    let newpeptide = document.createElement("span");
+    newpeptide.classList.add("peptide");
+    if (count === 6) {
+      newpeptide.classList.add("mutated");
+    }
+    let newSeparator = document.createElement("span");
+    newpeptide.innerText = peptide;
+    newSeparator.innerText = "---*---";
+    htmlProtein.push(newpeptide);
+    htmlProtein.push(newSeparator);
+  });
+  htmlProtein.pop();
+  descDisplay.innerText = "mutant";
+  htmlProtein.forEach((peptide) => {
+    renderDisplay.appendChild(peptide);
+  });
 });
