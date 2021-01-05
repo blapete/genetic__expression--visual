@@ -213,10 +213,24 @@ const geneExpressionMutated = (gene) => {
 
 const normalDisplay = document.querySelector(".expression__menu--normal");
 const mutateDisplay = document.querySelector(".expression__menu--mutate");
+const renderDisplay = document.querySelector(".expression__display");
 
 normalDisplay.addEventListener("click", () => {
   const haemoglobinSubunitBeta = geneExpression(HBB_GENE);
-  console.log(haemoglobinSubunitBeta);
+  let splitProtein = haemoglobinSubunitBeta.split("-*-");
+  let htmlProtein = [];
+  splitProtein.forEach((peptide) => {
+    let newpeptide = document.createElement("span");
+    newpeptide.classList.add("peptide");
+    let newSeparator = document.createElement("span");
+    newpeptide.innerText = peptide;
+    newSeparator.innerText = "---*---";
+    htmlProtein.push(newpeptide);
+    htmlProtein.push(newSeparator);
+  });
+  htmlProtein.forEach((peptide) => {
+    renderDisplay.appendChild(peptide);
+  });
 });
 
 mutateDisplay.addEventListener("click", () => {
