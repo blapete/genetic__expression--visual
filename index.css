@@ -1,0 +1,17 @@
+.expression__menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+  margin: 2rem auto;
+}
+
+@media (max-width: 767.98px) {
+  .expression__menu {
+    flex-direction: column;
+  }
+  .expresion__menu-separator {
+    margin: 5px;
+  }
+}
