@@ -239,8 +239,8 @@ function renderGene(x, y, z) {
 			newpeptide.classList.add(y);
 		}
 		let newSeparator = document.createElement('span');
-		newpeptide.innerText = peptide;
-		newSeparator.innerText = '---*---';
+		newpeptide.innerText = `${count} - ${peptide}`;
+		newSeparator.innerText = '-------';
 		htmlProtein.push(newpeptide);
 		htmlProtein.push(newSeparator);
 	});
